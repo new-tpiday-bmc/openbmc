@@ -4,7 +4,7 @@ LICENSE = "GPLv2"
 
 KCONFIG_MODE="--alldefconfig"
 
-KSRC ?= "git://github.com/SmileRipple/linux;protocol=git;branch=${KBRANCH}"
+KSRC ?= "git://github.com/new-tpiday-bmc/linux;protocol=git;branch=${KBRANCH}"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
 SRC_URI = "${KSRC}"
