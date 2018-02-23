@@ -52,6 +52,26 @@ vrm_avs_disable()
     i2cset -y $1 $2 0x01 0x80 b
 }
 
+# Usage: vrm_vout_max_1v1 <bus> <i2c_address> <page>
+# Sets VOUT_MAX to 1.1V
+vrm_vout_max_1v1()
+{
+    i2cset -y 7 0x60 0x24 0x3e8 w
+    echo Setting VOUT=[1.0V] on bus 7 VRM 0x60...
+    i2cset -y 7 0x62 0x24 0x3e8 w
+    echo Setting VOUT=[1.0V] on bus 7 VRM 0x62...
+    i2cset -y 7 0x62 0x00 0x01
+    i2cset -y 7 0x62 0x24 0x3c0 w
+    echo Setting VOUT=[0.96V] on bus 7 VRM 0x62 rail 0x01...
+    i2cset -y 8 0x61 0x24 0x3e8 w
+    echo Setting VOUT=[1.0V] on bus 8 VRM 0x61...
+    i2cset -y 8 0x63 0x24 0x3e8 w
+    echo Setting VOUT=[1.0V] on bus 8 VRM 0x63...
+    i2cset -y 8 0x63 0x00 0x01
+    i2cset -y 8 0x63 0x24 0x3c0 w
+    echo Setting VOUT=[0.96V] on bus 8 VRM 0x63 rail 0x01...
+}
+
 # Usage: vrm_print <bus> <i2c_address> <page>
 vrm_print()
 {
@@ -89,7 +109,11 @@ then
 elif [ "$1" == "disable" ]
 then
     for_each_rail vrm_avs_disable
+elif [ "$1" == "vdn_max" ]
+then
+    vrm_vout_max_1v1
 else
     for_each_rail vrm_print
     echo "\"$0 <enable|disable>\" to control whether VRMs use AVSBus"
+    echo "\"$0 <vdn_max>\" to set VDN rails VOUT_MAX to 1.1V"
 fi
