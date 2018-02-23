@@ -6,11 +6,14 @@
 
 cpu0_i2c_bus="7"
 cpu1_i2c_bus="8"
-busses="$cpu0_i2c_bus $cpu1_i2c_bus"
-vdd_i2c_addr_page="0x60:0x01"
-vdn_i2c_addr_page="0x64:0x01"
-vcs_i2c_addr_page="0x64:0x00"
+vdd_i2c_addr_page="0x60:0x00"
+vdn_i2c_addr_page="0x62:0x00"
+vcs_i2c_addr_page="0x62:0x01"
+vdd1_i2c_addr_page="0x61:0x00"
+vdn1_i2c_addr_page="0x63:0x00"
+vcs1_i2c_addr_page="0x63:0x01"
 addrs_pages="$vdd_i2c_addr_page $vdn_i2c_addr_page $vcs_i2c_addr_page"
+addrs_pages1="$vdd1_i2c_addr_page $vdn1_i2c_addr_page $vcs1_i2c_addr_page"
 
 # Usage: vrm_set_page <bus> <i2c_address> <page>
 vrm_set_page()
@@ -49,15 +52,6 @@ vrm_avs_disable()
     i2cset -y $1 $2 0x01 0x80 b
 }
 
-# Usage: vrm_vout_max_1v1 <bus> <i2c_address> <page>
-# Sets VOUT_MAX to 1.1V
-vrm_vout_max_1v1()
-{
-    vrm_set_page "$@"
-    echo Setting VOUT_MAX=[1.1V] on bus $1 VRM @$2 rail $3...
-    i2cset -y $1 $2 0x24 0x44c w
-}
-
 # Usage: vrm_print <bus> <i2c_address> <page>
 vrm_print()
 {
@@ -72,9 +66,17 @@ vrm_print()
 # <command> will be invoked with <bus> <i2c_address> <page>
 for_each_rail()
 {
-    for bus in $busses
+    for bus in $cpu0_i2c_bus
     do
         for addr_page in $addrs_pages
+        do
+            $1 $bus `echo $addr_page | tr : " "`
+        done
+    done
+
+    for bus in $cpu1_i2c_bus
+    do
+        for addr_page in $addrs_pages1
         do
             $1 $bus `echo $addr_page | tr : " "`
         done
@@ -87,12 +89,7 @@ then
 elif [ "$1" == "disable" ]
 then
     for_each_rail vrm_avs_disable
-elif [ "$1" == "vdn_max" ]
-then
-    addrs_pages="$vdn_i2c_addr_page"
-    for_each_rail vrm_vout_max_1v1
 else
     for_each_rail vrm_print
     echo "\"$0 <enable|disable>\" to control whether VRMs use AVSBus"
-    echo "\"$0 <vdn_max>\" to set VDN rails VOUT_MAX to 1.1V"
 fi
