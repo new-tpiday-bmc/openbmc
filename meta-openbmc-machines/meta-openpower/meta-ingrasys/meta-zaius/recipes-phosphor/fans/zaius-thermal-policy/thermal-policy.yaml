@@ -1,0 +1,348 @@
+# Copyright IBM to Zaius.
+# Witherspoon thermal policy for PDM.
+#
+# Shut down a Zaius system if more than one POWER9 cores
+# have a temperature greater than 43 and 46 degrees Celcius.
+
+- name: ambient sensors
+  description: >
+    'Zaius has a inlet temperature and two POWER9 chips with 24 cores each.'
+  class: group
+  group: path
+  members:
+    - meta: SENSOR
+      path: /xyz/openbmc_project/sensors/temperature/ambient_inlet
+
+- name: core sensors
+  description: >
+    'Zaius has a inlet temperature and two POWER9 chips with 24 cores each.'
+  class: group
+  group: path
+  members:
+    - meta: SENSOR
+      path: /xyz/openbmc_project/sensors/temperature/p0_core0_temp
+    - meta: SENSOR
+      path: /xyz/openbmc_project/sensors/temperature/p0_core1_temp
+    - meta: SENSOR
+      path: /xyz/openbmc_project/sensors/temperature/p0_core2_temp
+    - meta: SENSOR
+      path: /xyz/openbmc_project/sensors/temperature/p0_core3_temp
+    - meta: SENSOR
+      path: /xyz/openbmc_project/sensors/temperature/p0_core4_temp
+    - meta: SENSOR
+      path: /xyz/openbmc_project/sensors/temperature/p0_core5_temp
+    - meta: SENSOR
+      path: /xyz/openbmc_project/sensors/temperature/p0_core6_temp
+    - meta: SENSOR
+      path: /xyz/openbmc_project/sensors/temperature/p0_core7_temp
+    - meta: SENSOR
+      path: /xyz/openbmc_project/sensors/temperature/p0_core8_temp
+    - meta: SENSOR
+      path: /xyz/openbmc_project/sensors/temperature/p0_core9_temp
+    - meta: SENSOR
+      path: /xyz/openbmc_project/sensors/temperature/p0_core10_temp
+    - meta: SENSOR
+      path: /xyz/openbmc_project/sensors/temperature/p0_core11_temp
+    - meta: SENSOR
+      path: /xyz/openbmc_project/sensors/temperature/p0_core12_temp
+    - meta: SENSOR
+      path: /xyz/openbmc_project/sensors/temperature/p0_core13_temp
+    - meta: SENSOR
+      path: /xyz/openbmc_project/sensors/temperature/p0_core14_temp
+    - meta: SENSOR
+      path: /xyz/openbmc_project/sensors/temperature/p0_core15_temp
+    - meta: SENSOR
+      path: /xyz/openbmc_project/sensors/temperature/p0_core16_temp
+    - meta: SENSOR
+      path: /xyz/openbmc_project/sensors/temperature/p0_core17_temp
+    - meta: SENSOR
+      path: /xyz/openbmc_project/sensors/temperature/p0_core18_temp
+    - meta: SENSOR
+      path: /xyz/openbmc_project/sensors/temperature/p0_core19_temp
+    - meta: SENSOR
+      path: /xyz/openbmc_project/sensors/temperature/p0_core20_temp
+    - meta: SENSOR
+      path: /xyz/openbmc_project/sensors/temperature/p0_core21_temp
+    - meta: SENSOR
+      path: /xyz/openbmc_project/sensors/temperature/p0_core22_temp
+    - meta: SENSOR
+      path: /xyz/openbmc_project/sensors/temperature/p0_core23_temp
+    - meta: SENSOR
+      path: /xyz/openbmc_project/sensors/temperature/p1_core0_temp
+    - meta: SENSOR
+      path: /xyz/openbmc_project/sensors/temperature/p1_core1_temp
+    - meta: SENSOR
+      path: /xyz/openbmc_project/sensors/temperature/p1_core2_temp
+    - meta: SENSOR
+      path: /xyz/openbmc_project/sensors/temperature/p1_core3_temp
+    - meta: SENSOR
+      path: /xyz/openbmc_project/sensors/temperature/p1_core4_temp
+    - meta: SENSOR
+      path: /xyz/openbmc_project/sensors/temperature/p1_core5_temp
+    - meta: SENSOR
+      path: /xyz/openbmc_project/sensors/temperature/p1_core6_temp
+    - meta: SENSOR
+      path: /xyz/openbmc_project/sensors/temperature/p1_core7_temp
+    - meta: SENSOR
+      path: /xyz/openbmc_project/sensors/temperature/p1_core8_temp
+    - meta: SENSOR
+      path: /xyz/openbmc_project/sensors/temperature/p1_core9_temp
+    - meta: SENSOR
+      path: /xyz/openbmc_project/sensors/temperature/p1_core10_temp
+    - meta: SENSOR
+      path: /xyz/openbmc_project/sensors/temperature/p1_core11_temp
+    - meta: SENSOR
+      path: /xyz/openbmc_project/sensors/temperature/p1_core12_temp
+    - meta: SENSOR
+      path: /xyz/openbmc_project/sensors/temperature/p1_core13_temp
+    - meta: SENSOR
+      path: /xyz/openbmc_project/sensors/temperature/p1_core14_temp
+    - meta: SENSOR
+      path: /xyz/openbmc_project/sensors/temperature/p1_core15_temp
+    - meta: SENSOR
+      path: /xyz/openbmc_project/sensors/temperature/p1_core16_temp
+    - meta: SENSOR
+      path: /xyz/openbmc_project/sensors/temperature/p1_core17_temp
+    - meta: SENSOR
+      path: /xyz/openbmc_project/sensors/temperature/p1_core18_temp
+    - meta: SENSOR
+      path: /xyz/openbmc_project/sensors/temperature/p1_core19_temp
+    - meta: SENSOR
+      path: /xyz/openbmc_project/sensors/temperature/p1_core20_temp
+    - meta: SENSOR
+      path: /xyz/openbmc_project/sensors/temperature/p1_core21_temp
+    - meta: SENSOR
+      path: /xyz/openbmc_project/sensors/temperature/p1_core22_temp
+    - meta: SENSOR
+      path: /xyz/openbmc_project/sensors/temperature/p1_core23_temp
+    
+- name: ambient temp
+  description: >
+    'Monitor the temperature of ambient_inlet.'
+  class: group
+  group: property
+  type: int64
+  members:
+    - interface: xyz.openbmc_project.Sensor.Value
+      meta: TEMP
+      property: Value
+
+- name: core temp
+  description: >
+    'Monitor the temperature of each core.'
+  class: group
+  group: property
+  type: int64
+  members:
+    - interface: xyz.openbmc_project.Sensor.Value
+      meta: TEMP
+      property: Value
+
+- name: watch ambient_inlet warn_temp
+  description: >
+    'Trigger logic on ambient_inlet temp warninghigh changes.'
+  class: watch
+  watch: property
+  paths: ambient sensors
+  properties: ambient temp
+  callback: check ambient_inlet warn_temp
+
+- name: watch ambient_inlet crit_temp
+  description: >
+    'Trigger logic on core temp criticalhigh changes.'
+  class: watch
+  watch: property
+  paths: ambient sensors
+  properties: ambient temp
+  callback: check ambient_inlet crit_temp
+
+- name: watch core temps
+  description: >
+    'Trigger logic on core temp changes.'
+  class: watch
+  watch: property
+  paths: core sensors
+  properties: core temp
+  callback: check temps
+
+- name: check ambient_inlet warn_temp
+  description: >
+    'If this condition passes at least one core are running
+    too hot. log an event.'
+  class: condition
+  condition: count
+  paths: ambient sensors
+  properties: ambient temp
+  defer: 20000000us
+  callback: log and warninghigh
+  countop: '>='
+  countbound: 1
+  op: '>='
+  bound: 43000
+
+- name: check ambient_inlet crit_temp
+  description: >
+    'If this condition passes at least one core are running
+    too hot. log an event.'
+  class: condition
+  condition: count
+  paths: ambient sensors
+  properties: ambient temp
+  defer: 20000000us
+  callback: log and crit_shutdown
+  countop: '>='
+  countbound: 1
+  op: '>='
+  bound: 46000
+
+- name: check temps
+  description: >
+    'If this condition passes at least three cores are running
+    too hot.  Shut the system down.'
+  class: condition
+  condition: count
+  paths: core sensors
+  properties: core temp
+  callback: log and shutdown
+  countop: '>='
+  countbound: 3
+  op: '>='
+  bound: 90000
+
+- name: log and warninghigh
+  description: >
+    'log an warninghigh event.'
+  class: callback
+  callback: group
+  members:
+    - inlet_log
+    - create inlet_warninghigh error
+
+- name: log and crit_shutdown
+  description: >
+    'Shut the system down and log an criticalhigh event.'
+  class: callback
+  callback: group
+  members:
+    - inlet_shutdown
+    - inlet_log
+    - create inlet_shutdown error
+    - create inlet_criticalhigh error
+
+- name: log and shutdown
+  description: >
+    'Shut the system down and log an event.'
+  class: callback
+  callback: group
+  members:
+    - shutdown
+    - log
+    - create shutdown error
+    - create core_criticalhigh error
+
+- name: inlet_shutdown
+  description: >
+    'Shut down the system.'
+  class: callback
+  callback: method
+  service: org.freedesktop.systemd1
+  path: /org/freedesktop/systemd1
+  interface: org.freedesktop.systemd1.Manager
+  method: StartUnit
+  args:
+    - value: obmc-chassis-hard-poweroff@0.target
+      type: string
+    - value: replace
+      type: string
+
+- name: inlet_log
+  description: >
+    'Log a shutdown event to the systemd journal.'
+  class: callback
+  callback: journal
+  paths: ambient sensors
+  properties: ambient temp
+  severity: ERR
+  message: The system is too hot.  Shutting down.
+
+- name: shutdown
+  description: >
+    'Shut down the system.'
+  class: callback
+  callback: method
+  service: org.freedesktop.systemd1
+  path: /org/freedesktop/systemd1
+  interface: org.freedesktop.systemd1.Manager
+  method: StartUnit
+  args:
+    - value: obmc-chassis-hard-poweroff@0.target
+      type: string
+    - value: replace
+      type: string
+
+- name: log
+  description: >
+    'Log a shutdown event to the systemd journal.'
+  class: callback
+  callback: journal
+  paths: core sensors
+  properties: ambient temp
+  severity: ERR
+  message: The system is too hot.  Shutting down.
+
+- name: create inlet_warninghigh error
+  description: >
+    'Create a WarningHigh Error log.'
+  class: callback
+  callback: elog
+  paths: ambient sensors
+  properties: ambient temp
+  error: xyz::openbmc_project::Sensor::Threshold::Error::WarningHigh
+  metadata:
+    - name: xyz::openbmc_project::Sensor::Threshold::WarningHigh::SENSOR_TYPE
+      value: /xyz/openbmc_project/sensors/temperature/ambient_inlet
+      type: string
+
+- name: create inlet_criticalhigh error
+  description: >
+    'Create a CriticalHigh Error log.'
+  class: callback
+  callback: elog
+  paths: ambient sensors
+  properties: ambient temp
+  error: xyz::openbmc_project::Sensor::Threshold::Error::CriticalHigh
+  metadata:
+    - name: xyz::openbmc_project::Sensor::Threshold::CriticalHigh::SENSOR_TYPE
+      value: /xyz/openbmc_project/sensors/temperature/ambient_inlet
+      type: string
+
+- name: create inlet_shutdown error
+  description: >
+    'Create a SystemShutdown Error log.'
+  class: callback
+  callback: elog
+  paths: ambient sensors
+  properties: ambient temp
+  error: xyz::openbmc_project::State::Shutdown::ThermalEvent::Error::Processor
+
+- name: create shutdown error
+  description: >
+    'Create a SystemShutdown Error log.'
+  class: callback
+  callback: elog
+  paths: core sensors
+  properties: ambient temp
+  error: xyz::openbmc_project::State::Shutdown::ThermalEvent::Error::Processor
+
+- name: create core_criticalhigh error
+  description: >
+    'Create a CriticalHigh Error log.'
+  class: callback
+  callback: elog
+  paths: core sensors
+  properties: core temp
+  error: xyz::openbmc_project::Sensor::Threshold::Error::CriticalHigh
+  metadata:
+    - name: xyz::openbmc_project::Sensor::Threshold::CriticalHigh::SENSOR_TYPE
+      value: temperature
+      type: string
