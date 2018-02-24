@@ -1835,6 +1835,96 @@
             assert: true
             type: bool
 
+0xF0:
+  sensorType: 0xCD
+  path: /system/chassis/pcie_pe0_present
+  sensorReadingType: 0x03
+  serviceInterface: xyz.openbmc_project.Inventory.Manager
+  readingType: assertion
+  interfaces:
+    xyz.openbmc_project.Inventory.Item:
+      Present:
+        Offsets:
+          0x01:
+            assert: true
+            deassert: false
+            type: bool
+
+0xF2:
+  sensorType: 0xCD
+  path: /system/chassis/pcie_pe1_present
+  sensorReadingType: 0x03
+  serviceInterface: xyz.openbmc_project.Inventory.Manager
+  readingType: assertion
+  interfaces:
+    xyz.openbmc_project.Inventory.Item:
+      Present:
+        Offsets:
+          0x01:
+            assert: true
+            deassert: false
+            type: bool
+
+0xF4:
+  sensorType: 0xCD
+  path: /system/chassis/pcie_pe2_present
+  sensorReadingType: 0x03
+  serviceInterface: xyz.openbmc_project.Inventory.Manager
+  readingType: assertion
+  interfaces:
+    xyz.openbmc_project.Inventory.Item:
+      Present:
+        Offsets:
+          0x01:
+            assert: true
+            deassert: false
+            type: bool
+
+0xF6:
+  sensorType: 0xCD
+  path: /system/chassis/pcie_pe3_present
+  sensorReadingType: 0x03
+  serviceInterface: xyz.openbmc_project.Inventory.Manager
+  readingType: assertion
+  interfaces:
+    xyz.openbmc_project.Inventory.Item:
+      Present:
+        Offsets:
+          0x01:
+            assert: true
+            deassert: false
+            type: bool
+
+0xF8:
+  sensorType: 0xCD
+  path: /system/chassis/pcie_pe4_present
+  sensorReadingType: 0x03
+  serviceInterface: xyz.openbmc_project.Inventory.Manager
+  readingType: assertion
+  interfaces:
+    xyz.openbmc_project.Inventory.Item:
+      Present:
+        Offsets:
+          0x01:
+            assert: true
+            deassert: false
+            type: bool
+
+0xFA:
+  sensorType: 0xCD
+  path: /system/chassis/pcie_e2a_present
+  sensorReadingType: 0x03
+  serviceInterface: xyz.openbmc_project.Inventory.Manager
+  readingType: assertion
+  interfaces:
+    xyz.openbmc_project.Inventory.Item:
+      Present:
+        Offsets:
+          0x01:
+            assert: true
+            deassert: false
+            type: bool
+
 0xFC:
   sensorType: 0xCD
   path: /system/chassis/pcie_e2b_present
@@ -1845,7 +1935,7 @@
     xyz.openbmc_project.Inventory.Item:
       Present:
         Offsets:
-          0x1:
+          0x01:
             assert: true
             deassert: false
             type: bool
