@@ -1835,6 +1835,66 @@
             assert: true
             type: bool
 
+0xE4:
+  sensorType: 0xCD
+  path: /system/chassis/motherboard/fan0
+  sensorReadingType: 0x03
+  serviceInterface: xyz.openbmc_project.Inventory.Manager
+  readingType: assertion
+  interfaces:
+    xyz.openbmc_project.Inventory.Item:
+      Present:
+        Offsets:
+          0x01:
+            assert: true
+            deassert: false
+            type: bool
+
+0xE6:
+  sensorType: 0xCD
+  path: /system/chassis/motherboard/fan1
+  sensorReadingType: 0x03
+  serviceInterface: xyz.openbmc_project.Inventory.Manager
+  readingType: assertion
+  interfaces:
+    xyz.openbmc_project.Inventory.Item:
+      Present:
+        Offsets:
+          0x01:
+            assert: true
+            deassert: false
+            type: bool
+
+0xE8:
+  sensorType: 0xCD
+  path: /system/chassis/motherboard/fan2
+  sensorReadingType: 0x03
+  serviceInterface: xyz.openbmc_project.Inventory.Manager
+  readingType: assertion
+  interfaces:
+    xyz.openbmc_project.Inventory.Item:
+      Present:
+        Offsets:
+          0x01:
+            assert: true
+            deassert: false
+            type: bool
+
+0xEA:
+  sensorType: 0xCD
+  path: /system/chassis/motherboard/fan3
+  sensorReadingType: 0x03
+  serviceInterface: xyz.openbmc_project.Inventory.Manager
+  readingType: assertion
+  interfaces:
+    xyz.openbmc_project.Inventory.Item:
+      Present:
+        Offsets:
+          0x01:
+            assert: true
+            deassert: false
+            type: bool
+
 0xF0:
   sensorType: 0xCD
   path: /system/chassis/pcie_pe0_present
