@@ -1,6 +1,6 @@
-KBRANCH ?= "ops-idm-dev-4.10"
+KBRANCH ?= "test-ops-idm-dev-4.10"
 LINUX_VERSION ?= "4.10.17"
 
-SRCREV="1d50786f2610befa67f04641dd8c9aa70a2ab131"
+SRCREV="d950270ecc9d46397e374a95033b64a65164b83a"
 
 require linux-obmc.inc
