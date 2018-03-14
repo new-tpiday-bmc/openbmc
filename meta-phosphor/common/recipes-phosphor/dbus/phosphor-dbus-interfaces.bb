@@ -12,9 +12,9 @@ inherit phosphor-dbus-yaml
 DEPENDS += "autoconf-archive-native"
 DEPENDS += "sdbus++-native"
 
-FOXCONN_BRANCH="ops-idm"
+FOXCONN_BRANCH="test-ops-idm"
 SRC_URI += "git://github.com/new-tpiday-bmc/phosphor-dbus-interfaces;branch=${FOXCONN_BRANCH}"
-SRCREV = "7d1dd2b2dd364b6eb1a87f43a0ec33aa61c22075"
+SRCREV = "7113561c7bfc9ab1b8ef0473bf9afb8f86b7e492"
 
 DEPENDS_remove_class-native = "sdbus++-native"
 DEPENDS_remove_class-nativesdk = "sdbus++-native"
