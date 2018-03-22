@@ -3,7 +3,9 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 ZAIUS_CHIPS = "i2c@1e78a000/i2c-bus@40/ucd90160@64 \
                 i2c@1e78a000/i2c-bus@40/lm75@4a \
                 i2c@1e78a000/i2c-bus@40/lm75@49 \
+                pwm-tach-controller@1e78a000 \
                 "
+
 ZAIUS_ITEMSFMT = "ahb/apb/{0}.conf"
 
 ZAIUS_ITEMS = "${@compose_list(d, 'ZAIUS_ITEMSFMT', 'ZAIUS_CHIPS')}"
