@@ -1,9 +1,7 @@
 [Unit]
 Description=Enable AVSBus on VRMs
-Wants=vcs-on@%i.service
-After=vcs-on@%i.service
-Wants=obmc-chassis-poweron@%i.target
-Before=obmc-chassis-poweron@%i.target
+Wants=obmc-host-start-pre@%i.target
+Before=obmc-host-start-pre@%i.target
 Conflicts=obmc-host-stop@%i.target
 ConditionPathExists=!/run/openbmc/chassis@%i-on
 
